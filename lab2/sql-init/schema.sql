@@ -12,7 +12,7 @@ SET ROLE "school-user";
         last_name VARCHAR(50) NOT NULL,
         first_name VARCHAR(50) NOT NULL,
         status VARCHAR(8) NOT NULL DEFAULT 'active'
-            CONSTRAINT employee_status_ck CHECK (status IN ('active', 'inactive')),
+        CONSTRAINT employee_status_ck CHECK (status IN ('active', 'inactive')),
         CONSTRAINT employees_pk PRIMARY KEY (employee_id)
     );
 
@@ -32,39 +32,37 @@ SET ROLE "school-user";
     );
 
     CREATE TABLE lessons (
-            lesson_id INTEGER GENERATED ALWAYS AS IDENTITY,
-            lesson_name VARCHAR(50) NOT NULL,
-            CONSTRAINT lesson_pk PRIMARY KEY (lesson_id)
+        lesson_id INTEGER GENERATED ALWAYS AS IDENTITY,
+        lesson_name VARCHAR(50) NOT NULL,
+        CONSTRAINT lesson_pk PRIMARY KEY (lesson_id)
     );
 
     CREATE TABLE schedule (
+        schedule_id INTEGER NOT NULL,
         lesson_date DATE NOT NULL,
-        class_number VARCHAR(8) NOT NULL,
+        class_name VARCHAR(8) NOT NULL,
         classroom INTEGER NOT NULL,
         lesson_number INTEGER NOT NULL,
         lesson_name VARCHAR(50) NOT NULL,
-        schedule_date DATE NOT NULL,
-        CONSTRAINT cleaning_schedule_pk PRIMARY KEY (employee_id, floor_number, schedule_date),
-        CONSTRAINT employees_fk FOREIGN KEY (employee_id) REFERENCES employees (employee_id)
+        CONSTRAINT schedule_pk PRIMARY KEY (schedule_id),
+        CONSTRAINT classes_fk FOREIGN KEY (class_id) REFERENCES classes (class_id)
+        CONSTRAINT lessons_fk FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id)
     );
 
-    CREATE TABLE visits (
-        visit_id INTEGER GENERATED ALWAYS AS IDENTITY,
-        room_id INTEGER NOT NULL,
-        start_date DATE NOT NULL,
-        end_date DATE,
+    CREATE TABLE classes (
+        class_id INTEGER GENERATED ALWAYS AS IDENTITY,
+        class_name VARCHAR(8) NOT NULL,
         CONSTRAINT visits_pk PRIMARY KEY (visit_id),
         CONSTRAINT rooms_fk FOREIGN KEY (room_id) REFERENCES rooms (room_id)
     );
 
-    CREATE TABLE visit_clients (
-        visit_id INTEGER NOT NULL REFERENCES visits(visit_id),
-        client_id INTEGER NOT NULL REFERENCES clients(client_id),
-        CONSTRAINT visit_clients_pk PRIMARY KEY (visit_id, client_id),
-        CONSTRAINT visit_clients_visit_fk FOREIGN KEY (visit_id) REFERENCES visits (visit_id),
-        CONSTRAINT visit_clients_client_fk FOREIGN KEY (client_id) REFERENCES clients (client_id)
+    CREATE TABLE ratings (
+        rating_id INTEGER GENERATED ALWAYS AS IDENTITY,
+        lesson_name VARCHAR(50) NOT NULL,
+        rating_first_quarter INTEGER NOT NULL,
+        rating_second_quarter INTEGER NOT NULL,
+        rating_third_quarter INTEGER NOT NULL,
+        rating_fourth_quarter INTEGER NOT NULL,
+        CONSTRAINT visits_pk PRIMARY KEY (visit_id),
+        CONSTRAINT rooms_fk FOREIGN KEY (room_id) REFERENCES rooms (room_id)
     );
-
-
-
-
