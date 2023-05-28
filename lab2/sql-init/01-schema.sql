@@ -30,7 +30,7 @@ SET ROLE "suser";
             CONSTRAINT teacher_status_ck CHECK (status IN ('active', 'inactive')),
         CONSTRAINT teachers_pk PRIMARY KEY (teacher_id, classroom_id),
         CONSTRAINT teacher_id_uk UNIQUE (teacher_id),
-        CONSTRAINT classrooms_fk FOREIGN KEY (classroom_id) REFERENCES classrooms (classroom_id)
+        CONSTRAINT classrooms_fk FOREIGN KEY (room_number) REFERENCES classrooms (room_number)
     );
 
     CREATE TABLE students (
