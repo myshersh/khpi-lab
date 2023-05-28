@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS labs;
+DROP DATABASE IF EXISTS school;
 
 CREATE ROLE "school-user" LOGIN PASSWORD 'password';
 
