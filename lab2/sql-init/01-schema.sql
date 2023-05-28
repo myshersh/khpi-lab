@@ -29,8 +29,8 @@ SET ROLE "suser";
         internal_identifier INTEGER NOT NULL,
         status VARCHAR(8) NOT NULL DEFAULT 'active'
             CONSTRAINT teacher_status_ck CHECK (status IN ('active', 'inactive')),
-        CONSTRAINT internal_identifier_uk UNIQUE (internal_identifier),
         CONSTRAINT teachers_pk PRIMARY KEY (teacher_id, classroom_id),
+        CONSTRAINT teacher_id_uk UNIQUE (teacher_id),
         CONSTRAINT classrooms_fk FOREIGN KEY (classroom_id) REFERENCES classrooms (classroom_id)
     );
 
