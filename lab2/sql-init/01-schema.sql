@@ -26,7 +26,6 @@ SET ROLE "suser";
         last_name VARCHAR(50) NOT NULL,
         first_name VARCHAR(50) NOT NULL,
         classroom_id INTEGER,
-        internal_identifier INTEGER NOT NULL,
         status VARCHAR(8) NOT NULL DEFAULT 'active'
             CONSTRAINT teacher_status_ck CHECK (status IN ('active', 'inactive')),
         CONSTRAINT teachers_pk PRIMARY KEY (teacher_id, classroom_id),
