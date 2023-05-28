@@ -1,11 +1,11 @@
 DROP DATABASE IF EXISTS school;
 
-CREATE ROLE "school-user" LOGIN PASSWORD 'password';
+CREATE ROLE "suser" LOGIN PASSWORD 'password';
 
-CREATE DATABASE labs ENCODING 'UTF-8' LC_COLLATE 'en_US.UTF-8' LC_CTYPE 'en_US.UTF-8' TEMPLATE template0 OWNER "school-user";
+CREATE DATABASE school ENCODING 'UTF-8' LC_COLLATE 'en_US.UTF-8' LC_CTYPE 'en_US.UTF-8' TEMPLATE template0 OWNER "suser";
 
 \connect school;
-SET ROLE "school-user";
+SET ROLE "suser";
 
     CREATE TABLE teachers (
         teacher_id INTEGER GENERATED ALWAYS AS IDENTITY,

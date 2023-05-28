@@ -1,5 +1,5 @@
-\connect labs;
-SET ROLE "school-user";
+\connect school;
+SET ROLE "suser";
 
 -- скільки вчителів без кабінету
 SELECT COUNT(1) FROM teachers
