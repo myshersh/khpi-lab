@@ -73,11 +73,12 @@ SET ROLE "suser";
 
     CREATE TABLE ratings (
         rating_id INTEGER GENERATED ALWAYS AS IDENTITY,
+        student_id INTEGER NOT NULL,
         lesson_name VARCHAR(50) NOT NULL,
         rating_first_quarter INTEGER NOT NULL,
         rating_second_quarter INTEGER NOT NULL,
         rating_third_quarter INTEGER NOT NULL,
         rating_fourth_quarter INTEGER NOT NULL,
-        CONSTRAINT ratings_pk PRIMARY KEY (rating_id),
+        CONSTRAINT ratings_pk PRIMARY KEY (rating_id, student_id),
         CONSTRAINT students_fk FOREIGN KEY (student_id) REFERENCES students (student_id)
     );
