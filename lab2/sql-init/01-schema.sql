@@ -79,5 +79,5 @@ SET ROLE "suser";
         rating_third_quarter INTEGER NOT NULL,
         rating_fourth_quarter INTEGER NOT NULL,
         CONSTRAINT ratings_pk PRIMARY KEY (rating_id),
-        CONSTRAINT students_fk FOREIGN KEY (rating_id) REFERENCES students (rating_id)
+        CONSTRAINT students_fk FOREIGN KEY (student_id) REFERENCES students (student_id)
     );
