@@ -7,6 +7,18 @@ CREATE DATABASE school ENCODING 'UTF-8' LC_COLLATE 'en_US.UTF-8' LC_CTYPE 'en_US
 \connect school;
 SET ROLE "suser";
 
+    CREATE TABLE classes (
+        class_id INTEGER GENERATED ALWAYS AS IDENTITY,
+        class_name VARCHAR(8) NOT NULL,
+        CONSTRAINT classes_pk PRIMARY KEY (class_id)
+    );
+
+    CREATE TABLE classrooms (
+        classroom_id INTEGER GENERATED ALWAYS AS IDENTITY,
+        room_number VARCHAR(8) NOT NULL,
+        CONSTRAINT classroom_pk PRIMARY KEY (classroom_id)
+    );
+
     CREATE TABLE teachers (
         teacher_id INTEGER GENERATED ALWAYS AS IDENTITY,
         last_name VARCHAR(50) NOT NULL,
@@ -30,12 +42,6 @@ SET ROLE "suser";
         CONSTRAINT classes_fk FOREIGN KEY (class_id) REFERENCES classes (class_id)
     );
 
-    CREATE TABLE classrooms (
-        classroom_id INTEGER GENERATED ALWAYS AS IDENTITY,
-        room_number VARCHAR(8) NOT NULL,
-        CONSTRAINT classroom_pk PRIMARY KEY (classroom_id)
-    );
-
     CREATE TABLE lessons (
         lesson_id INTEGER GENERATED ALWAYS AS IDENTITY,
         lesson_name VARCHAR(50) NOT NULL,
@@ -57,13 +63,6 @@ SET ROLE "suser";
         CONSTRAINT lessons_fk FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id),
         CONSTRAINT teachers_fk FOREIGN KEY (teacher_id) REFERENCES teachers (teacher_id),
         CONSTRAINT classrooms_fk FOREIGN KEY (classroom_id) REFERENCES classrooms (classroom_id)
-    );
-
-    CREATE TABLE classes (
-        class_id INTEGER GENERATED ALWAYS AS IDENTITY,
-        class_name VARCHAR(8) NOT NULL,
-        CONSTRAINT visits_pk PRIMARY KEY (visit_id),
-        CONSTRAINT rooms_fk FOREIGN KEY (room_id) REFERENCES rooms (room_id)
     );
 
     CREATE TABLE ratings (
