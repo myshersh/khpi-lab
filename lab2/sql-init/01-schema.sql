@@ -10,13 +10,15 @@ SET ROLE "suser";
     CREATE TABLE classes (
         class_id INTEGER GENERATED ALWAYS AS IDENTITY,
         class_name VARCHAR(8) NOT NULL,
-        CONSTRAINT classes_pk PRIMARY KEY (class_id)
+        CONSTRAINT classes_pk PRIMARY KEY (class_id),
+        CONSTRAINT class_name_uk UNIQUE (class_name)
     );
 
     CREATE TABLE classrooms (
         classroom_id INTEGER GENERATED ALWAYS AS IDENTITY,
         room_number VARCHAR(8) NOT NULL,
-        CONSTRAINT classroom_pk PRIMARY KEY (classroom_id)
+        CONSTRAINT classroom_pk PRIMARY KEY (classroom_id),
+        CONSTRAINT room_number_uk UNIQUE (room_number)
     );
 
     CREATE TABLE teachers (
@@ -24,8 +26,10 @@ SET ROLE "suser";
         last_name VARCHAR(50) NOT NULL,
         first_name VARCHAR(50) NOT NULL,
         classroom_id INTEGER,
+        internal_identifier INTEGER NOT NULL,
         status VARCHAR(8) NOT NULL DEFAULT 'active'
             CONSTRAINT teacher_status_ck CHECK (status IN ('active', 'inactive')),
+        CONSTRAINT internal_identifier_uk UNIQUE (internal_identifier),
         CONSTRAINT teachers_pk PRIMARY KEY (teacher_id, classroom_id),
         CONSTRAINT classrooms_fk FOREIGN KEY (classroom_id) REFERENCES classrooms (classroom_id)
     );
@@ -46,13 +50,14 @@ SET ROLE "suser";
         lesson_id INTEGER GENERATED ALWAYS AS IDENTITY,
         lesson_name VARCHAR(50) NOT NULL,
         teacher_id INTEGER NOT NULL,
-        CONSTRAINT lesson_pk PRIMARY KEY (lesson_id)
+        CONSTRAINT lesson_pk PRIMARY KEY (lesson_id),
+        CONSTRAINT lesson_name_uk UNIQUE (lesson_name)
     );
 
     CREATE TABLE schedule (
         schedule_id INTEGER NOT NULL,
         lesson_date DATE NOT NULL,
-        class_id VARCHAR(8) NOT NULL,
+        class_id INTEGER NOT NULL,
         classroom_id INTEGER NOT NULL,
         lesson_number INTEGER NOT NULL,
         lesson_name VARCHAR(50) NOT NULL,
