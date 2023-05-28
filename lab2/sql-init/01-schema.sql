@@ -43,6 +43,7 @@ SET ROLE "suser";
         status VARCHAR(8) NOT NULL DEFAULT 'active'
             CONSTRAINT student_status_ck CHECK (status IN ('active', 'inactive')),
         CONSTRAINT students_pk PRIMARY KEY (student_id),
+        CONSTRAINT student_id_uk UNIQUE (student_id),
         CONSTRAINT classes_fk FOREIGN KEY (class_id) REFERENCES classes (class_id)
     );
 
