@@ -1,6 +1,6 @@
 ## Purpose
 
-Sample project for LAB_2.
+Sample project for lab2.
 
 ## Blog post
 
