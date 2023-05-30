@@ -20,4 +20,4 @@
     VALUES (current_date, 1, 1, 1, 1, 1), (current_date, 2, 2, 2, 2, 2);
 
     INSERT INTO ratings (student_id, lesson_id, rating_first_quarter, rating_second_quarter, rating_third_quarter, rating_fourth_quarter)
-    VALUES (1, 1, 12, NULL, NULL, NULL), VALUES (2, 1, 9, NULL, NULL, NULL);
+    VALUES (1, 1, 12, NULL, NULL, NULL), (2, 1, 9, NULL, NULL, NULL);
