@@ -25,12 +25,11 @@ SET ROLE "suser";
         teacher_id INTEGER GENERATED ALWAYS AS IDENTITY,
         last_name VARCHAR(50) NOT NULL,
         first_name VARCHAR(50) NOT NULL,
-        room_number VARCHAR(8) NOT NULL,
+        classroom_id INTEGER,
         status VARCHAR(8) NOT NULL DEFAULT 'active'
             CONSTRAINT teacher_status_ck CHECK (status IN ('active', 'inactive')),
-        CONSTRAINT teachers_pk PRIMARY KEY (teacher_id, room_number),
-        CONSTRAINT teacher_id_uk UNIQUE (teacher_id),
-        CONSTRAINT classrooms_fk FOREIGN KEY (room_number) REFERENCES classrooms (room_number)
+        CONSTRAINT teachers_pk PRIMARY KEY (teacher_id),
+        CONSTRAINT classrooms_fk FOREIGN KEY (classroom_id) REFERENCES classrooms (classroom_id)
     );
 
     CREATE TABLE students (
@@ -38,32 +37,28 @@ SET ROLE "suser";
         last_name VARCHAR(50) NOT NULL,
         first_name VARCHAR(50) NOT NULL,
         class_id INTEGER NOT NULL,
-        rating_id INTEGER NOT NULL,
         status VARCHAR(8) NOT NULL DEFAULT 'active'
             CONSTRAINT student_status_ck CHECK (status IN ('active', 'inactive')),
         CONSTRAINT students_pk PRIMARY KEY (student_id),
-        CONSTRAINT student_id_uk UNIQUE (student_id),
         CONSTRAINT classes_fk FOREIGN KEY (class_id) REFERENCES classes (class_id)
     );
 
     CREATE TABLE lessons (
         lesson_id INTEGER GENERATED ALWAYS AS IDENTITY,
         lesson_name VARCHAR(50) NOT NULL,
-        teacher_id INTEGER NOT NULL,
         CONSTRAINT lesson_pk PRIMARY KEY (lesson_id),
         CONSTRAINT lesson_name_uk UNIQUE (lesson_name)
     );
 
     CREATE TABLE schedule (
-        schedule_id INTEGER NOT NULL,
+        schedule_id INTEGER GENERATED ALWAYS AS IDENTITY,
         lesson_date DATE NOT NULL,
         class_id INTEGER NOT NULL,
         classroom_id INTEGER NOT NULL,
-        lesson_number INTEGER NOT NULL,
-        lesson_name VARCHAR(50) NOT NULL,
         teacher_id INTEGER NOT NULL,
+        lesson_number INTEGER NOT NULL,
         lesson_id INTEGER NOT NULL,
-        CONSTRAINT schedule_pk PRIMARY KEY (schedule_id, class_id, teacher_id, lesson_id, classroom_id),
+        CONSTRAINT schedule_pk PRIMARY KEY (schedule_id),
         CONSTRAINT classes_fk FOREIGN KEY (class_id) REFERENCES classes (class_id),
         CONSTRAINT lessons_fk FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id),
         CONSTRAINT teachers_fk FOREIGN KEY (teacher_id) REFERENCES teachers (teacher_id),
@@ -73,11 +68,12 @@ SET ROLE "suser";
     CREATE TABLE ratings (
         rating_id INTEGER GENERATED ALWAYS AS IDENTITY,
         student_id INTEGER NOT NULL,
-        lesson_name VARCHAR(50) NOT NULL,
-        rating_first_quarter INTEGER NOT NULL,
-        rating_second_quarter INTEGER NOT NULL,
-        rating_third_quarter INTEGER NOT NULL,
-        rating_fourth_quarter INTEGER NOT NULL,
-        CONSTRAINT ratings_pk PRIMARY KEY (rating_id, student_id),
-        CONSTRAINT students_fk FOREIGN KEY (student_id) REFERENCES students (student_id)
+        lesson_id INTEGER NOT NULL,
+        rating_first_quarter INTEGER,
+        rating_second_quarter INTEGER,
+        rating_third_quarter INTEGER,
+        rating_fourth_quarter INTEGER,
+        CONSTRAINT ratings_pk PRIMARY KEY (rating_id),
+        CONSTRAINT students_fk FOREIGN KEY (student_id) REFERENCES students (student_id),
+        CONSTRAINT lessons_fk FOREIGN KEY (lesson_id) REFERENCES lessons (lesson_id)
     );
