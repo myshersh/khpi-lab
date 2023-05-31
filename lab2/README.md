@@ -13,7 +13,6 @@ a bunch of packages on your machine and potentially running into different
 platform and environment issues.
 
 If you don't have Docker, please visit https://docs.docker.com/get-docker/.
-
 To run the database with the example schema:
 
 ```
